@@ -81,7 +81,6 @@ public class DecomposeRule : Rule {
             if (s.transform != parent) {
                 scaleDownObject(s);
             }
-            //     s.transform.parent = parent;
         }
         return compShapes.ToArray();
     }
@@ -111,5 +110,4 @@ public class DecomposeRule : Rule {
         tmp.z = shapeDepth;
         s.transform.localScale = tmp;
     }
-
 }

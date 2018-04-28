@@ -67,7 +67,6 @@ public class RuleGenerator : MonoBehaviour {
                 terminalRegions.Add(ret);
                 count++;
             }
-            //             Debug.Log(c + " - " + count);
         }
         writeDebugPicture(terminalRegions);
 
@@ -145,7 +144,6 @@ public class RuleGenerator : MonoBehaviour {
         repeats = RegionFinder.findRealRepeats(splits, axis);
         
         // Bad datastructure and complexity, should use other
-        // Du kan prova att bara leta efter subregions som repeterar, ingen klar fördel med ditt sätt
         foreach (Region current in splits) {
             // Find the largest repeat-region that contains our current split region
             Region containedIn = null;
@@ -185,10 +183,9 @@ public class RuleGenerator : MonoBehaviour {
             string rule = regionName + " -> split(" + axis + ")";
             rule += createShapeSplitString(splits, axis);
             writeToRuleFile(rule);
-            hasRules.Add(regionName);
-            // Now we need to write the repeat rules, which regions are contained in the large repeat areas
-            
+            hasRules.Add(regionName);     
         }
+        // Now we need to write the repeat rules, which regions are contained in the large repeat areas 
         foreach (Region r in splitRepeats) {
             writeRepeatRule(r, axis);
         }

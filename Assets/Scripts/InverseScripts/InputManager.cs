@@ -86,7 +86,6 @@ public class InputManager : MonoBehaviour {
     private bool nextFacade() {
         nextFacadeIndex++;
         if (nextFacadeIndex <= facades.Length) {
-        print(facades.Length);
             // Clear all information
             informationRects = new List<Rectangle>();
             currentFacadeRectangles = new Queue<Rectangle>();

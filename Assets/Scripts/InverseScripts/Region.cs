@@ -162,11 +162,6 @@ public class Region {
         sortTerminals();
         Debug.Log(terminals.Count + " terminal regions.");
         Debug.Log("From: (" + fromX + "," + fromY + ")" + " - To: (" + toX + "," + toY + ")");
-        /*  for (int i = 0; i < terminals.Count; i++) {
-            Rectangle r = terminals[i];
-            //    Debug.Log("Rectangle: Color - " + r.symbol);
-            r.debugPrint();
-        }*/
     }
 
     // Checks if this region contains all the terminal regions of another region

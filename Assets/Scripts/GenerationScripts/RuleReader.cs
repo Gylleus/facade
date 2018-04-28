@@ -52,7 +52,6 @@ public class RuleReader : MonoBehaviour {
     private void handleRuleLine(string line) {
         string[] splitLine = line.Split(' ');
         string from = splitLine[0];
-        // KANSKE KAPAR SCOPET
         if (splitLine.Length > 2 && splitLine[1] == "->") {
             string[] typeSplit = splitLine[2].Split('(');
             string axis = typeSplit[1].Substring(0, typeSplit[1].IndexOf(')'));
@@ -90,7 +89,7 @@ public class RuleReader : MonoBehaviour {
             case "replace":
                 return createReplaceRule(axis, line, ruleType);
             default:
-                Debug.Log("Invalid type of rule.");
+                Debug.LogError("Invalid type of rule.");
                 return newRule;
         }
 

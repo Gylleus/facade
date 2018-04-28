@@ -102,23 +102,16 @@ public class Shape : MonoBehaviour {
     }
 
     public void assignParent(Transform newParent) {
-        if (toSqueeze) {
-      //      transform.localScale = finalSize;
-        }
-        transform.parent = newParent;
-        
+        transform.parent = newParent;    
     }
 
     public void subscribeForSqueeze(Vector3 squeezedSize) {
         finalSize = squeezedSize;
-   //     GrammarDerivator.Finished += applyHexagonSqueeze;
-   //     toSqueeze = true;
     }
 
     public void applyHexagonSqueeze() {
         transform.localScale = finalSize;
         transform.parent = parent.transform;
-    //    transform.localScale = new Vector3(1, 1, transform.localScale.z);
         GrammarDerivator.Finished -= applyHexagonSqueeze;
     }
 

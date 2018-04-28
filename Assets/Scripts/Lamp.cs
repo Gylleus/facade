@@ -13,7 +13,6 @@ public class Lamp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (getCordPoints()) {
-    //        heightenCords(lineDipHeight);
             createCordLine();
         }
 	}
@@ -29,9 +28,6 @@ public class Lamp : MonoBehaviour {
         lineR.positionCount = 3;
 
         lineR.SetPositions(new Vector3[] { leftCordPoint, transform.position, rightCordPoint });
-        //lineR.widthMultiplier = lineWidth;
-       // lineR.startColor = cordColor;
-
     }
 
     // Gets and sets the points that the cords of the lamp will be attached to.

@@ -25,11 +25,9 @@ public class CameraScript : MonoBehaviour {
             rigid.AddForce(-transform.forward * accelerationSpeed / 2);
         }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) {
-            //rigid.AddForce(-transform.right * accelerationSpeed / 2);
             transform.Rotate(0, -rotationSpeed * Time.deltaTime, 0);
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) {
-            //            rigid.AddForce(transform.right * accelerationSpeed / 2);
             transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
         }
         if (Input.GetKey(KeyCode.Space)) {
@@ -38,6 +36,5 @@ public class CameraScript : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) {
             rigid.AddForce(0, -accelerationSpeed / 2, 0);
         }
-
     }
 }

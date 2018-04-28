@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class SplitRule : Rule {
 
-    // Constraints on geometry of input 
-
-
     // Define a split action
     public override GameObject[] ruleAction(Transform parent) {
         GameObject[] splitShapes = new GameObject[into.Length];
@@ -62,41 +59,7 @@ public class SplitRule : Rule {
             }
             splitShapes[i] = newObject;
             spawnPos += scale[i] * getAxis(parent) /2;
-      //      newObject.transform.parent = parent;
         }
         return splitShapes;
     }
-
-
-
-    /*
-        public bool matchesShape(Shape shape) {
-            return (shape.size.x >= minSize.x && shape.size.x <= maxSize.x && shape.size.y >= minSize.y && shape.size.y <= maxSize.y
-                && shape.size.z >= minSize.z && shape.size.z <= maxSize.z);
-        }
-        */
-    /*
-    public Symbol from;
-    
-    public SplitRule (Symbol f, GameObject[] t, float xmi, float xma, float ymi, float yma, float zmi, float zma) {
-        xMin = xmi; xMax = xma;
-        yMin = ymi; yMax = yma;
-        zMin = zmi; zMax = zma;
-
-        from = f;
-        into = t;
-    }
-    */
-
-    /*
-    public GameObject[] into;
-    public Vector3[] position;
-    public bool[] absoluteX;
-    public bool[] absoluteY;
-    public bool[] absoluteZ;
-    public bool[] inheritXSize;
-    public bool[] inheritYSize;
-    public bool[] inheritZSize;
-    */
-
 }

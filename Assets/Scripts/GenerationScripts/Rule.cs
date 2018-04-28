@@ -41,14 +41,11 @@ public abstract class Rule : ScriptableObject {
 
     public Vector3 getAxis(Transform parent) {
         if (axis == Axis.X) {
-            //  return new Vector3(1, 0, 0);
             return parent.right;
         }
         else if (axis == Axis.Y) {
-            //return new Vector3(0, 1, 0);
             return parent.up;
         } else {
-            //            return new Vector3(0, 0, 1);
             return parent.forward;
         }
     }
@@ -79,15 +76,12 @@ public abstract class Rule : ScriptableObject {
 
     public float axisScale(Transform parent) {
         if (axis == Axis.X) {
-            //  return new Vector3(1, 0, 0);
             return parent.lossyScale.x;
         }
         else if (axis == Axis.Y) {
-            //return new Vector3(0, 1, 0);
             return parent.lossyScale.y;
         }
         else {
-            //            return new Vector3(0, 0, 1);
             return parent.lossyScale.z;
         }
     }
@@ -106,5 +100,4 @@ public abstract class Rule : ScriptableObject {
     public bool containsZ() {
         return axis == Axis.Z || axis == Axis.XZ || axis == Axis.YZ || axis == Axis.XYZ;
     }
-
 }

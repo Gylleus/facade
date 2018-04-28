@@ -34,9 +34,6 @@ public class RepeatRule : Rule {
 
         float[] localScales = new float[scale.Length];
         Array.Copy(scale, localScales, scale.Length);
-        if (repetitions == 0) {
-            Debug.Log(into[0].name);
-        }
 
         // Calculate difference between parents size and the split components size.
         float scaleDifference = parentAxisScale - totalScale * repetitions;
@@ -69,10 +66,6 @@ public class RepeatRule : Rule {
                 }
                 repeatShapes[i+(r*into.Length)] = newObject;
                 spawnPos += localScales[i] * getAxis(parent) / 2;
-     //           newObject.transform.SetParent(parent);
-          //      Debug.Log(newObject.name + " - " + newObject.transform.lossyScale + "  |  " + parent.name + "  - " + parent.lossyScale);
-
-                //      Debug.Log(i + (r * into.Length));
             }
         }
         return repeatShapes;

@@ -62,8 +62,6 @@ public class ProtrudeRule : Rule {
         // Fix for other dimensions
 
         if (!negativeProtusion) {
-            //parent.Translate((parent.localScale.x / 2 * parent.right + parent.localScale.y / 2 * parent.up + parent.localScale.z / 2 * parent.forward) / 2, Space.World);
-         //   parent.Translate(parent.localScale.z / 2 * parent.forward / 2, Space.World);
             parent.localScale = parent.lossyScale + scaleVector;
             parent.position = parent.transform.position + parent.transform.forward * scaleVector.z /2;
         } else {
@@ -74,37 +72,4 @@ public class ProtrudeRule : Rule {
 
         return new GameObject[] { parent.gameObject };
     }
-
-
-
-    /*
-        public bool matchesShape(Shape shape) {
-            return (shape.size.x >= minSize.x && shape.size.x <= maxSize.x && shape.size.y >= minSize.y && shape.size.y <= maxSize.y
-                && shape.size.z >= minSize.z && shape.size.z <= maxSize.z);
-        }
-        */
-    /*
-    public Symbol from;
-    
-    public SplitRule (Symbol f, GameObject[] t, float xmi, float xma, float ymi, float yma, float zmi, float zma) {
-        xMin = xmi; xMax = xma;
-        yMin = ymi; yMax = yma;
-        zMin = zmi; zMax = zma;
-
-        from = f;
-        into = t;
-    }
-    */
-
-    /*
-    public GameObject[] into;
-    public Vector3[] position;
-    public bool[] absoluteX;
-    public bool[] absoluteY;
-    public bool[] absoluteZ;
-    public bool[] inheritXSize;
-    public bool[] inheritYSize;
-    public bool[] inheritZSize;
-    */
-
 }

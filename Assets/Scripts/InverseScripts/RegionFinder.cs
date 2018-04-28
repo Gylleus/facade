@@ -21,7 +21,6 @@ public static class RegionFinder {
             for (int y = 0; y < image.height; y++) {
                 if (!visited[x, y]) {
                     Color c = image.GetPixel(x, y);
-                    //      print(c);
                     if (!rectangles.ContainsKey(c)) {
                         rectangles.Add(c, new List<Rectangle>());
                         Debug.Log("New color" + c + " at: (" + x + "," + y + ")");
@@ -65,11 +64,6 @@ public static class RegionFinder {
                     // Add the rectangle to list
                     rectangles[c].Add(newRec);
                 }
-            }
-        }
-        for (int x = 0; x < image.width; x++) {
-            for (int y = 0; y < image.height; y++) {
-                //       s += visited[x, y];
             }
         }
         return rectangles;
@@ -391,7 +385,6 @@ public static class RegionFinder {
                     foreach (Rectangle next in region.terminals) {
                         // If the rectangles are Y-aligned and are adjacent
                         if (current != next && next.fromX-1 == current.toX && next.toY == current.toY) {
-                 //           stop(current,next);
                             current = next;
                             nextRectangleExists = true;
                             break;

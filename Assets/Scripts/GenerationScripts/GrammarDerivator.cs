@@ -27,8 +27,6 @@ public class GrammarDerivator : MonoBehaviour {
 
         ruleSelector = grammarObject.GetComponent<RuleSelector>();
         grammar = grammarObject.GetComponent<Grammar>();
-
-        //   startingShapes = getStartingShapes();
         startingShapes = new GameObject[] { gameObject };
 
         foreach (GameObject s in startingShapes) {
@@ -49,7 +47,7 @@ public class GrammarDerivator : MonoBehaviour {
 
         while (shapes.Count > 0) {
             GameObject currentShape = shapes[0];
-            // GÖR TILL KÖ
+            // Should make into queue
             shapes.RemoveAt(0);
 
             Rule chosenRule = ruleSelector.selectRule(currentShape);
@@ -65,7 +63,6 @@ public class GrammarDerivator : MonoBehaviour {
             }
 
             if (chosenRule != null) {
-                //currentShape.SetActive(false);
                 Rule.Axis ruleAxis = chosenRule.axis;
                 // Choose the axis for the rule to be performed on if multiple axes are available.
                 if (!chosenRule.multiDimensional) chosenRule.axis = chooseAxis(chosenRule, currentShape.transform);
@@ -114,7 +111,6 @@ public class GrammarDerivator : MonoBehaviour {
         assignParents(processedShapes);
         cleanParentlessShapes();
         grammarObject.GetComponent<RoofCreator>().createRoofs(buildings.ToArray());
-        //   mergeTerminals();
         if (Finished != null) {
             Finished();
         }
