@@ -41,20 +41,6 @@ public static class MaterialExtractor {
     }
 
     private static Rectangle chooseFromTerminals(List<Rectangle> terminals) {
-        return terminals[Random.Range(0, terminals.Count-1)];
-        if (terminals != null && terminals.Count > 0) {
-            Rectangle chosen = terminals[0];
-            foreach (Rectangle other in terminals) {
-                int chosenArea = (chosen.toX - chosen.fromX) * (chosen.toY - chosen.fromY);
-                int otherArea = (other.toX - other.fromX) * (other.toY - other.fromY);
-
-                if (otherArea > chosenArea) {
-                    chosen = other;
-                }
-            }
-            return chosen;
-        }
-        Debug.LogWarning("No terminal could be chosen in list due to being empty or undefined.");
-        return null;
+        return terminals[Random.Range(0, terminals.Count-1)];        
     }
 }

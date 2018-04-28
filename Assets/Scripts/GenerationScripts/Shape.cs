@@ -136,7 +136,8 @@ public class Shape : MonoBehaviour {
             terminalTexture.LoadImage(imageBytes);
             shapeMaterial.mainTexture = terminalTexture;
         }
-        catch (FileNotFoundException e) {
+        catch (FileNotFoundException)
+        {
             Debug.LogWarning(gameObject.name + " does not have a material defined. No material was assigned to terminal shape.");
         }
     }

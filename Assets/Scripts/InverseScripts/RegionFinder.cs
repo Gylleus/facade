@@ -230,56 +230,7 @@ public static class RegionFinder {
             }
         }
         return findAllRegionCombinations(repeatedTerminals);
-        // Total search all possible merges of repeating terminals
-        foreach (Rectangle fromTerminal in repeatedTerminals) {
-            // Initialize a new region starting from the current terminal
-            Region mergingRegion = new Region(fromTerminal);
-
-            // Create a copy of all terminal regions to check which we can merge with
-            List<Rectangle> notMerged = new List<Rectangle>(repeatedTerminals);
-            notMerged.Remove(fromTerminal);
-
-            bool merged = true;
-            // While we can still merge with another repeated terminal region
-            while(merged) {
-                merged = false;
-                int terminalsBefore = mergingRegion.terminals.Count;
-               
-                mergingRegion = tryMerge(mergingRegion, notMerged);
-               // If successfully merged 
-                if (mergingRegion.terminals.Count > terminalsBefore) {
-                    merged = true;
-                    // Remove the last added terminal from the list of unmerged terminals
-                    notMerged.Remove(mergingRegion.terminals[mergingRegion.terminals.Count - 1]);
-                    // Can optimize by placing correctly when adding the new terminal region
-                    mergingRegion.sortTerminals();
-                    allMergedRegions.Add(new Region(mergingRegion));
-                }
-            }
-        }
-
-        // allMergedRegions now should contain all possible merged regions
-        allMergedRegions = allMergedRegions.OrderBy(o => o.terminals.Count).ToList();
-        List<Region> distinctMergedRegions = new List<Region>();
-
-        // Remove all duplicate entries of the same region (same terminals with same position)
-        foreach(Region current in allMergedRegions) {
-            bool exists = false;
-            foreach (Region other in distinctMergedRegions) {
-                // If the same region already exists
-                if (current.equals(other)) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists) {
-                distinctMergedRegions.Add(current);
-            }
-        }
-        // Finally check which distinct merged regions are connected
-        return distinctMergedRegions;
     }
-
 
     private static Region tryMerge(Region r, List<Rectangle> otherRegions) {
         Region newRegion = new Region(r);
