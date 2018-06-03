@@ -87,8 +87,6 @@ public class DecomposeRule : Rule {
 
     // Instantiates the new decomposed shapes and modifies their transform accordingly to axis
     private List<GameObject> decompose(List<GameObject> compShapes, Vector3 firstPos, Vector3 secondPos, Vector3 firstRot, Vector3 secondRot, Transform parent, int axisIndex, Vector3 newScale) {
-        Vector3 halvedParentZVector = new Vector3(0, 0, parent.lossyScale.z) / 2;
-
         GameObject firstShape = Instantiate(into[axisIndex], firstPos, parent.rotation);
         GameObject secondShape = Instantiate(into[axisIndex], secondPos, parent.rotation);
         firstShape.name = into[axisIndex].name;

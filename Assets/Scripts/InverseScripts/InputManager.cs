@@ -10,7 +10,7 @@ using Rectangle = RuleGenerator.Rectangle;
 
 public class InputManager : MonoBehaviour {
 
-    public Text buildingNameText;
+    public Text buildingNameText, widthText, heightText;
     public InputField nameField, zField;
     public GameObject facadePreviewHolder;
     private Image facadePreview;
@@ -47,9 +47,7 @@ public class InputManager : MonoBehaviour {
 
     // Reads in all information of a facade
     public List<Rectangle> initializeNewFacade(InputFacade facade) {
-
         allCurrentFacadeRectangles = RegionFinder.findRectangles(facade.facadeLayoutName, facade.inputFacade.width, facade.inputFacade.height);
-
         float maxY = 0; float maxX = 0;
 
         foreach (Color c in allCurrentFacadeRectangles.Keys) {
@@ -60,7 +58,11 @@ public class InputManager : MonoBehaviour {
         }
 
         buildingNameText.text = facade.gameObject.name;
-
+        widthText.text = facade.getBuildingWidth().ToString();
+        heightText.text = facade.getBuildingHeight().ToString();
+        Vector3 previewScale = facadePreview.rectTransform.localScale;
+        print(previewScale.y * facade.getBuildingWidth() / facade.getBuildingHeight());
+        facadePreview.rectTransform.localScale = new Vector3(previewScale.y * facade.getBuildingWidth() / facade.getBuildingHeight(), previewScale.y, 1);
         foreach (Color c in allCurrentFacadeRectangles.Keys) {
             Rectangle newRect = new Rectangle();
             newRect.symbol = c;
@@ -93,7 +95,6 @@ public class InputManager : MonoBehaviour {
             // Initialize the new facade
             InputFacade iF = facades[nextFacadeIndex - 1].GetComponent<InputFacade>();
             initializeNewFacade(iF);
-
             string facadePath = Application.dataPath + iF.facadeLayoutName;
 
             Texture2D imageTex = readFacadeImage(facadePath);
@@ -132,7 +133,6 @@ public class InputManager : MonoBehaviour {
 
     // Goes a step in the generation interface, choosing the next rectangle or going to the next facade
     public void updateNext() {
-
         Rectangle infoRect = new Rectangle();
         infoRect.name = nameField.text;
         float.TryParse(zField.text, out infoRect.depth);

@@ -16,17 +16,13 @@ public class ProtrudeRule : Rule {
     public override GameObject[] ruleAction(Transform parent) {
         Vector3 scaleVector = Vector3.zero;
         int scaleIndex = 0;
-        Transform returnT = parent;
-
         Shape transformShape = parent.GetComponent<Shape>();
-
         bool negativeProtusion = false;
 
         // Check if shape has already protruded to prevent infinite loops
         if (transformShape.hasProtruded) {
             return null;
         }
-
         transformShape.hasProtruded = true;
 
         if (axis == Axis.X || axis == Axis.XY || axis == Axis.XZ || axis == Axis.XYZ) {
@@ -60,15 +56,12 @@ public class ProtrudeRule : Rule {
         }
 
         // Fix for other dimensions
-
         if (!negativeProtusion) {
             parent.localScale = parent.lossyScale + scaleVector;
             parent.position = parent.transform.position + parent.transform.forward * scaleVector.z /2;
         } else {
             parent.localScale = parent.lossyScale + scaleVector * 2;
         }
-
-
 
         return new GameObject[] { parent.gameObject };
     }

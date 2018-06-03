@@ -14,8 +14,6 @@ public class Shape : MonoBehaviour {
 
     // Used for remembering how much to squeeze hexagons
     private Vector3 finalSize;
-    private bool toSqueeze = false;
-
     public GameObject parent;
     public GameObject topParent;
 
@@ -73,10 +71,6 @@ public class Shape : MonoBehaviour {
         return ret;
     }
 
-    void Update() {
-        if (debugging) checkOcclusionFor(gameObject);
-    }
-
     public void setParent(GameObject p) {
         Shape tmp = p.GetComponent<Shape>();
         while (tmp != null && tmp.parent != null) {
@@ -84,21 +78,6 @@ public class Shape : MonoBehaviour {
         }
         topParent = tmp.gameObject;
         parent = p.gameObject;
-    }
-
-    // Gets the object that an input object is occluded by. If there is not occluding object null will be returned.
-    public void checkOcclusionFor(GameObject shape) {
-        Vector3[] norms = GetComponent<MeshFilter>().mesh.normals;
-        Vector3[] verts = GetComponent<MeshFilter>().mesh.vertices;
-        int[] triangles = GetComponent<MeshFilter>().mesh.triangles;
-        for (int i = 0; i < triangles.Length; i+=3) {
-            Vector3 p1 = verts[triangles[i]];
-            Vector3 p2 = verts[triangles[i + 1]];
-            Vector3 p3 = verts[triangles[i + 2]];
-            Vector3 n1 = norms[triangles[i]];
-            Vector3 n2 = norms[triangles[i+1]];
-            Vector3 n3 = norms[triangles[i+2]];
-        }
     }
 
     public void assignParent(Transform newParent) {

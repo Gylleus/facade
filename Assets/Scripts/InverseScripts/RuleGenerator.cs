@@ -10,19 +10,12 @@ public class RuleGenerator : MonoBehaviour {
     // Public variables
 
     public string outputFileName = "rules.txt";
-
-    public string buildingName;
-    public float buildingHeight = 1;
-    public float buildingWidth = 1;
-
-    public Texture2D inputFacade, facadeLayout;
     public string terminalRegionsName;
 
     // Private variables
 
     // regionIndex is used to name regions
     private int regionIndex = 1;
-    private int facadeHeight, facadeWidth;
     private Dictionary<Region, string> regionNames = new Dictionary<Region, string>();
     private List<string> hasRules = new List<string>();
     private StreamWriter fileDS;
@@ -47,18 +40,18 @@ public class RuleGenerator : MonoBehaviour {
             Debug.LogError("Skipping " + inputF.gameObject.name);
         }
         else {
-            buildingName = inputF.gameObject.name;
-            inputFacade = inputF.inputFacade;
+          //  buildingName = inputF.gameObject.name;
+        //    currentFacade = inputF;
+        //    inputFacade = inputF.inputFacade;
             
-            facadeHeight = inputFacade.height;
-            facadeWidth = inputFacade.width;
+         //   facadeHeight = inputFacade.height;
+          //  facadeWidth = inputFacade.width;
 
-            generateRules(rectangles);
+            generateRules(rectangles, inputF);
         }
     }
 
-    private void generateRules(Dictionary<Color, List<Rectangle>> rectangles) {
-
+    private void generateRules(Dictionary<Color, List<Rectangle>> rectangles, InputFacade inputF) {
         List<Region> repeatedRegions = null;
         List<Rectangle> terminalRegions = new List<Rectangle>();
         foreach (Color c in rectangles.Keys) {
@@ -68,34 +61,34 @@ public class RuleGenerator : MonoBehaviour {
                 count++;
             }
         }
-        writeDebugPicture(terminalRegions);
+        writeDebugPicture(terminalRegions, inputF);
 
-        splitFacade(repeatedRegions, terminalRegions);
-        setTerminalNames(rectangles);
-        checkTerminalProtrusion(rectangles);
-        MaterialExtractor.extractMaterials(rectangles, inputFacade);
+        string buildingName = inputF.gameObject.name;
+        splitFacade(repeatedRegions, terminalRegions, inputF);
+        setTerminalNames(rectangles, buildingName);
+        checkTerminalProtrusion(rectangles, buildingName);
+        MaterialExtractor.extractMaterials(rectangles, inputF.inputFacade);
     }
 
-    private void writeInitialRules() {
+    private void writeInitialRules(string buildingName) {
         writeToRuleFile(buildingName + " -> decompose(XZ) {" + buildingName + "Start" + " | " + buildingName + "Start}");
     }
 
-    private void splitFacade(List<Region> repeatedRegions, List<Rectangle> terminalRegions) {
-
-        writeInitialRules();
-
+    private void splitFacade(List<Region> repeatedRegions, List<Rectangle> terminalRegions, InputFacade inputF) {
+        string buildingName = inputF.gameObject.name;
+        string startShape = buildingName + "Start";
+        // Create the initial decomposition rule to create 4 walls from a cube
+        writeInitialRules(buildingName);
         Queue<Region> regionsToSplit = new Queue<Region>();
 
         Region start = new Region(terminalRegions);
-
-        regionNames.Add(start, buildingName+"Start");
+        regionNames.Add(start, startShape);
         regionsToSplit.Enqueue(start);
 
         while (regionsToSplit.Count > 0) {
             Region toSplit = regionsToSplit.Dequeue();
-
             // If the current region is a terminal region then we should not split further
-            if (toSplit.terminals.Count == 1 || hasRules.Contains(getRegionName(toSplit))) {
+            if (toSplit.terminals.Count == 1 || hasRules.Contains(getRegionName(toSplit, buildingName))) {
                 continue;
             }
 
@@ -113,26 +106,23 @@ public class RuleGenerator : MonoBehaviour {
                 return;
             } else if (xSplits != null && (ySplits == null || xSplits.Count >= ySplits.Count)) {
                 // If the X-split is preferred
-                createSplitRule(xSplits, repeatedRegions, "X", getRegionName(toSplit));
+                createSplitRule(xSplits, repeatedRegions, "X", getRegionName(toSplit, buildingName), inputF);
                 toEnqueue = xSplits;
             }
             else {
                 // If the Y-split is preferred
-                toEnqueue = createSplitRule(ySplits, repeatedRegions, "Y", getRegionName(toSplit));
+                toEnqueue = createSplitRule(ySplits, repeatedRegions, "Y", getRegionName(toSplit, buildingName), inputF);
                 toEnqueue = ySplits;
             }
-
             foreach (Region newRegion in toEnqueue) {
                 regionsToSplit.Enqueue(newRegion);
             }
-
             fileDS.Flush();
         }
-
     }
 
     // Deducts and write a split rule given a split on an axis
-    private List<Region> createSplitRule(List<Region> splits, List<Region> repeats, string axis, string regionName) {
+    private List<Region> createSplitRule(List<Region> splits, List<Region> repeats, string axis, string regionName, InputFacade inputF) {
         List<Region> splitRepeats = new List<Region>();
         List<Region> nonRepeats = new List<Region>();
 
@@ -171,30 +161,29 @@ public class RuleGenerator : MonoBehaviour {
         splits = RegionManager.sortRegions(splits, axis);
 
         foreach (Region region in splits) {
-            setRegionName(region);
+            setRegionName(region, inputF.gameObject.name);
         }
 
         foreach (Region repeatR in splitRepeats) {
-            relativeRegions.Add(getRegionName(repeatR));
+            relativeRegions.Add(getRegionName(repeatR, inputF.gameObject.name));
         }
 
         // Add case for just repeat later
         if (splits.Count > splitRepeats.Count) {
             string rule = regionName + " -> split(" + axis + ")";
-            rule += createShapeSplitString(splits, axis);
+            rule += createShapeSplitString(splits, axis, inputF);
             writeToRuleFile(rule);
             hasRules.Add(regionName);     
         }
         // Now we need to write the repeat rules, which regions are contained in the large repeat areas 
         foreach (Region r in splitRepeats) {
-            writeRepeatRule(r, axis);
+            writeRepeatRule(r, axis, inputF);
         }
         return splits;
     }
 
-    private void writeRepeatRule(Region r, string axis) {
-
-        string from = getRegionName(r);
+    private void writeRepeatRule(Region r, string axis, InputFacade inputF) {
+        string from = getRegionName(r, inputF.gameObject.name);
         string repeatRule =  from + " -> repeat(" + axis + ")";
         // If there already exists a rule
         if (hasRules.Contains(from)) {
@@ -234,19 +223,21 @@ public class RuleGenerator : MonoBehaviour {
             }
         }
 
-        repeatRule += createShapeSplitString(repeatSequence, axis);
+        repeatRule += createShapeSplitString(repeatSequence, axis, inputF);
         writeToRuleFile(repeatRule);
     }
 
     // Creates and returns the string that defines the size and shapes of that the rule splits into
-    public string createShapeSplitString(List<Region> shapes, string axis) {
+    public string createShapeSplitString(List<Region> shapes, string axis, InputFacade inputF) {
         string splitString = " {";
-        int facadeLength = (axis == "X") ? inputFacade.width : inputFacade.height;
-        float buildingSize = (axis == "X") ? buildingWidth : buildingHeight;
+        // Get width/height in pixels of the input facade depending on which axis we are working on
+        int facadeLength = (axis == "X") ? inputF.inputFacade.width : inputF.inputFacade.height;
+        // Get self defined height and length of building
+        float buildingSize = (axis == "X") ? inputF.getBuildingWidth() : inputF.getBuildingHeight();
         for (int i = 0; i < shapes.Count; i++) {
             Region subarea = shapes[i];
             float size = (axis == "X") ? (subarea.toX - subarea.fromX) * 1f / facadeLength : (subarea.toY - subarea.fromY) * 1f / facadeLength;
-            string shapeName = getRegionName(subarea);
+            string shapeName = getRegionName(subarea, inputF.gameObject.name);
             string relative = (relativeRegions.Contains(shapeName)) ? "N" : "";
             splitString += size * buildingSize + relative + ": " + shapeName;
 
@@ -258,7 +249,7 @@ public class RuleGenerator : MonoBehaviour {
         return splitString;
     }
 
-    private void setRegionName(Region r) {
+    private void setRegionName(Region r, string buildingName) {
         bool exists = false;
         // Check if the region type already exists so we dont give redundant names
         foreach (Region other in regionNames.Keys) {
@@ -280,7 +271,7 @@ public class RuleGenerator : MonoBehaviour {
         }
     }
 
-    private string getRegionName(Region r) {
+    private string getRegionName(Region r, string buildingName) {
         foreach (Region other in regionNames.Keys) {
             if (r.equalTerminals(other)) {
                 return regionNames[other];
@@ -288,7 +279,7 @@ public class RuleGenerator : MonoBehaviour {
         }
 
         // If no name for this kind of region was found
-        setRegionName(r);
+        setRegionName(r, buildingName);
         return regionNames[r];
     }
 
@@ -313,11 +304,11 @@ public class RuleGenerator : MonoBehaviour {
         return colorsFound;
     }
 
-    private void setTerminalNames(Dictionary<Color,List<Rectangle>> terminals) {
+    private void setTerminalNames(Dictionary<Color,List<Rectangle>> terminals, string buildingName) {
         foreach (Color c in terminals.Keys) {
             foreach (Rectangle rect in terminals[c]) {
                 Region termReg = new Region(rect);
-                rect.name = getRegionName(termReg);
+                rect.name = getRegionName(termReg, buildingName);
             }
         }
 
@@ -327,9 +318,9 @@ public class RuleGenerator : MonoBehaviour {
         fileDS.WriteLine(newRule);
     }
 
-    private void writeDebugPicture(List<Rectangle> rectangles) {
+    private void writeDebugPicture(List<Rectangle> rectangles, InputFacade inputF) {
 
-        Texture2D debugTex = new Texture2D(facadeWidth, facadeHeight);
+        Texture2D debugTex = new Texture2D(inputF.inputFacade.width, inputF.inputFacade.height);
 
         foreach (Rectangle rectangle in rectangles) {
             int width = rectangle.toX - rectangle.fromX;
@@ -346,13 +337,13 @@ public class RuleGenerator : MonoBehaviour {
     }
 
     // Create rules for the protrusion of terminal regions
-    private void checkTerminalProtrusion(Dictionary<Color,List<Rectangle>> rectangles) {
+    private void checkTerminalProtrusion(Dictionary<Color,List<Rectangle>> rectangles, string buildingName) {
 
         foreach (Color c in rectangles.Keys) {
             // Take the first rectangle as anyone would suffice since they share the same Z value
             Rectangle rect = rectangles[c][0];
             if (rect.depth != 0) {
-                writeDepthRule(getRegionName(new Region(rect)), rect.depth);
+                writeDepthRule(getRegionName(new Region(rect), buildingName), rect.depth);
             }
         }
 

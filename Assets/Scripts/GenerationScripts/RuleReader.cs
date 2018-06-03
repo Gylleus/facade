@@ -16,6 +16,8 @@ public class RuleReader : MonoBehaviour {
 
     public GameObject instantiateFrom;
 
+    int lineNr = 0;
+
 	// Use this for initialization
 	void Start () {
         ruleList = new Dictionary<string, List<Rule>>();
@@ -34,31 +36,42 @@ public class RuleReader : MonoBehaviour {
     }
 
     private void readRules() {
-            string line;
-            StreamReader reader = new StreamReader(Application.dataPath + "/" + ruleFileName, Encoding.Default);
-            using (reader) {
-                do {
-                    line = reader.ReadLine();
-                    if (line != null) {
-                        handleRuleLine(line);
-                    }
-                } while (line != null);
+        string line;
+        StreamReader reader = new StreamReader(Application.dataPath + "/" + ruleFileName, Encoding.Default);
+        using (reader) {
+            do {
+                lineNr++;
+                line = reader.ReadLine();
+                if (line != null) {
+                    handleRuleLine(line, lineNr);
+                }
+            } while (line != null);
 
-                reader.Close();
+            reader.Close();
 
-            }
-    }
-
-    private void handleRuleLine(string line) {
-        string[] splitLine = line.Split(' ');
-        string from = splitLine[0];
-        if (splitLine.Length > 2 && splitLine[1] == "->") {
-            string[] typeSplit = splitLine[2].Split('(');
-            string axis = typeSplit[1].Substring(0, typeSplit[1].IndexOf(')'));
-            addRule(from, createSplitRule(axis, line, typeSplit[0].ToLower()));
         }
     }
-    
+
+    private void handleRuleLine(string line, int lineNr) {
+        // If the line is empty, skip it
+        if (line.Trim(' ') == "") {
+            return;
+        }
+        // First element should be the From shape, the second an arrow, the third the rule type
+        string[] splitLine = line.Split(' ');
+        
+        if (splitLine.Length <= 3) {
+            throwSyntaxError("Rule contains too few components.");
+        }
+        else if (splitLine[1] != "->") {
+            throwSyntaxError("Second element is not an arrow ('->').");
+        } else {
+            string[] typeSplit = splitLine[2].Split('(');
+            string axis = typeSplit[1].Substring(0, typeSplit[1].IndexOf(')'));
+            addRule(splitLine[0], createNewRule(axis, line, typeSplit[0].ToLower()));
+        }
+    }
+
     // Adds a created rule to the rule 
     private void addRule(string shape, Rule newRule) {
 
@@ -69,7 +82,13 @@ public class RuleReader : MonoBehaviour {
 
     }
 
-    private Rule createSplitRule(string axis, string line, string ruleType) {
+    private void throwSyntaxError(string error) {
+        string errorText = "Invalid rule syntax: " + error + "  (line: " + lineNr + ")";
+        Debug.LogError(errorText);
+        throw new Exception(errorText);
+    }
+
+    private Rule createNewRule(string axis, string line, string ruleType) {
 
         Rule newRule = null;
 
@@ -86,10 +105,8 @@ public class RuleReader : MonoBehaviour {
             case "protrude":
                 newRule = ScriptableObject.CreateInstance<ProtrudeRule>();
                 break;
-            case "replace":
-                return createReplaceRule(axis, line, ruleType);
             default:
-                Debug.LogError("Invalid type of rule.");
+                throwSyntaxError("Invalid type of rule: " + ruleType + "\nValid rules are split, repeat, decompose, protrude");
                 return newRule;
         }
 
@@ -121,7 +138,7 @@ public class RuleReader : MonoBehaviour {
                 newRule.axis = Rule.Axis.XYZ;
                 break;
             default:
-                Debug.LogWarning("Axis of rule misformed. Written as: " + axis.Trim() + ".");
+                throwSyntaxError("Axis of rule non-valid. Written as: " + axis.Trim() + "\nValid values are X, Y, Z, XY, XZ, YZ, XYZ");
                 break;
         }
 
@@ -191,38 +208,11 @@ public class RuleReader : MonoBehaviour {
                         newRule.maxSize.z = float.Parse(attValue);
                         break;
                     default:
-                        Debug.LogWarning("Unknown attribute: " + attType);
+                        throwSyntaxError("Unknown attribute: " + attType + "\nValid attributes are minX, minY, minZ, maxX, maxY, maxZ");
                         break;
                 }
             }
         }
-    }
-
-    private Rule createReplaceRule(string shapeType, string line, string ruleType) {
-        ReplaceRule newRule = ScriptableObject.CreateInstance<ReplaceRule>();
-        string newRuleShapes = line.Substring(line.IndexOf('{') + 1, line.IndexOf('}') - 1 - line.IndexOf('{')).Trim();
-
-        switch (shapeType.Trim().ToLower()) {
-            case "cylinder":
-                newRule.shapeTypeInto = Shape.ShapeType.cylinder;
-                break;
-            case "hexagon":
-                newRule.shapeTypeInto = Shape.ShapeType.hexagon;
-                break;
-            default:
-                Debug.LogError("Error in new shape type name in replace rule.");
-                break;
-        }
-
-        newRule.into = new GameObject[1];
-        
-        if (!shapeExists(newRuleShapes)) {
-            shapes.Add(createNewShapeObject(newRuleShapes));
-        }
-        newRule.into[0] = getShape(newRuleShapes);
-        readAttributes(line, newRule);
-
-        return newRule;
     }
 
     private GameObject getShape(string shapeName) {
@@ -242,7 +232,6 @@ public class RuleReader : MonoBehaviour {
         }
         return false;
     }
-
 
     private GameObject createNewShapeObject(string name) {
         GameObject newObject = Instantiate(instantiateFrom);

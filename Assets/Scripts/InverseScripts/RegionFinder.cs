@@ -23,7 +23,6 @@ public static class RegionFinder {
                     Color c = image.GetPixel(x, y);
                     if (!rectangles.ContainsKey(c)) {
                         rectangles.Add(c, new List<Rectangle>());
-                        Debug.Log("New color" + c + " at: (" + x + "," + y + ")");
                     }
 
                     Rectangle newRec = new Rectangle();
@@ -112,20 +111,15 @@ public static class RegionFinder {
     }
 
     // Finds and returns areas that can be defined by repeats as a merged region
-    public static List<Region> findRealRepeats(List<Region> splits, string axis) {
-
-        
+    public static List<Region> findRealRepeats(List<Region> splits, string axis) {        
         List<Region> repeatAreas = new List<Region>();
-        List<Region> notAddedRepeats = new List<Region>();
 
         // Get a list of all split regions that appear at least twice
         List<Region> duplicates = RegionManager.getRegionDuplicates(splits);
         List<Region> repeatedSplits = new List<Region>(duplicates);
 
         // Fix when the original non-merged regions of splits can be repeated
-
         while (duplicates.Count > 0) {
-
             List<Region> mergedRegions = new List<Region>();
 
             // Try to merge all regions in all four directions (which only be two due to the list being splits)
@@ -136,10 +130,8 @@ public static class RegionFinder {
                     mergedRegions.Add(mergedRegion);
                 }
             }
-
             duplicates = RegionManager.getRegionDuplicates(mergedRegions);
             List<Region> mergedDuplicates = RegionManager.mergeDuplicateRegions(duplicates);
-            List<Region> newAreas = new List<Region>();
 
             // Now to check if we had any successful merges and then add them to the repeat list
             foreach (Region r in mergedDuplicates) {
@@ -173,22 +165,18 @@ public static class RegionFinder {
                 uniqueRepeats.Add(current);
             }
         }
-
         return uniqueRepeats;
     }
     
 
     private static void updateOccurences(Dictionary<Region,int> occurences, Region reg) {
-
         bool exists = false;
-
         foreach (Region other in occurences.Keys) {
             if (other.equalTerminals(other)) {
                 exists = true;
                 occurences[other]++;
             }
         }
-
         if (!exists) {
             occurences.Add(reg, 1);
         }
@@ -213,10 +201,7 @@ public static class RegionFinder {
     }
 
     public static List<Region> findRepeats(Dictionary<Color,List<Rectangle>> terminals) {
-
         List<Rectangle> repeatedTerminals = new List<Rectangle>();
-        List<Region> allMergedRegions = new List<Region>();
-
         // Find all terminals that are repeated at least twice
         foreach (Color c in terminals.Keys) {
             if (terminals[c].Count > 1) {
@@ -224,37 +209,6 @@ public static class RegionFinder {
             }
         }
         return findAllRegionCombinations(repeatedTerminals);
-    }
-
-    private static Region tryMerge(Region r, List<Rectangle> otherRegions) {
-        Region newRegion = new Region(r);
-        
-        foreach (Rectangle other in otherRegions) {
-            // Try merge up
-            if (newRegion.fromX == other.fromX && newRegion.toX == other.toX && newRegion.toY == other.fromY - 1) {
-                newRegion.toY = other.toY;
-                newRegion.terminals.Add(other);
-                return newRegion;
-            }
-            // Try merge down
-            if (newRegion.fromX == other.fromX && newRegion.toX == other.toX && other.toY == newRegion.fromY - 1) {
-                newRegion.fromY = other.fromY;
-                newRegion.terminals.Add(other);
-                return newRegion;
-            }
-            // Try merge right
-            if (newRegion.toX == other.fromX - 1 && newRegion.fromY == other.fromY && newRegion.toY == other.toY) {
-                newRegion.toX = other.toX;
-                newRegion.terminals.Add(other);
-                return newRegion;
-            }
-            // Try merge left
-            if (other.toX == newRegion.fromX - 1 && newRegion.fromY == other.fromY && newRegion.toY == other.toY) {
-                newRegion.fromX = other.fromX;
-                return newRegion;
-            }
-        }
-        return newRegion;
     }
 
     // Creates a list of the splits of a region on the Y-axis
@@ -314,7 +268,6 @@ public static class RegionFinder {
     // Tries to create a vertical region starting from the bottom-left of the area
     public static Region createRegionHorizontal(Region region) {
         region.sortTerminals();
-
         int toX = -1;
 
         // Try to find a line starting from Y = 'from'
@@ -330,7 +283,7 @@ public static class RegionFinder {
                     nextRectangleExists = false;
 
                     foreach (Rectangle next in region.terminals) {
-                        // If the rectangles are Y-aligned and are adjacent
+                        // If the rectangles are X-aligned and are adjacent
                         if (current != next && next.fromY-1 == current.toY && next.toX == current.toX) {
                             current = next;
                             nextRectangleExists = true;
@@ -338,7 +291,6 @@ public static class RegionFinder {
                         }
                     }
                 }
-
                 // If the generated line succesfully stretches from 'from' to 'to' then we have created a valid line and can end the loop
                 if (current.toY == region.toY) {
                     toX = current.toX;

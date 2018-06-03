@@ -42,8 +42,6 @@ public static class RegionManager {
 
 
     public static Region tryMergeRegions(Region first, Region second) {
-        Region newRegion = new Region(first);
-
         if (canMerge(first, second)) {
             List<RuleGenerator.Rectangle> mergedRegionTerminals = new List<RuleGenerator.Rectangle>(first.terminals);
             mergedRegionTerminals.AddRange(second.terminals);
