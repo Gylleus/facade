@@ -323,6 +323,74 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 155965120}
+--- !u!1 &208113956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 208113957}
+  - component: {fileID: 208113959}
+  - component: {fileID: 208113958}
+  m_Layer: 5
+  m_Name: LayoutPreview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &208113957
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 208113956}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 263525966}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 315, y: -246}
+  m_SizeDelta: {x: 299.94995, y: 298.56}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &208113958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 208113956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &208113959
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 208113956}
 --- !u!1 &240836276
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +553,7 @@ RectTransform:
   - {fileID: 1577450311}
   - {fileID: 65235533}
   - {fileID: 642598296}
+  - {fileID: 208113957}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1003,7 +1072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 347.77002, y: 25.719986}
+  m_AnchoredPosition: {x: 304, y: 236}
   m_SizeDelta: {x: 299.94995, y: 298.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &642598297
@@ -1025,8 +1094,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1228,7 +1297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.061000004, y: 0.26500002}
   m_AnchorMax: {x: 0.5937281, y: 0.35834366}
-  m_AnchoredPosition: {x: -1.4000015, y: 1.7000008}
+  m_AnchoredPosition: {x: -1.4000092, y: 1.7000008}
   m_SizeDelta: {x: -1, y: -1.199997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1065217127
@@ -1345,7 +1414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10300001, y: 0.87333375}
   m_AnchorMax: {x: 0.4766364, y: 0.97}
-  m_AnchoredPosition: {x: -0.6499939, y: 0.5}
+  m_AnchoredPosition: {x: -0.64998627, y: 0.5}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163722873
@@ -1692,7 +1761,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.096, y: 0.48662546}
   m_AnchorMax: {x: 0.46718013, y: 0.58000004}
-  m_AnchoredPosition: {x: -0.65000916, y: -0.6000004}
+  m_AnchoredPosition: {x: -0.6500168, y: -0.6000004}
   m_SizeDelta: {x: 3, y: -1.2000008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1340953854
@@ -1734,6 +1803,49 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1340953852}
+--- !u!1 &1403251148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1403251150}
+  - component: {fileID: 1403251149}
+  m_Layer: 0
+  m_Name: ExampleHouse2
+  m_TagString: Facade
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1403251149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1403251148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ea9901898c37348bef53d278b89962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputFacade: {fileID: 2800000, guid: 458eb269e54686e419a0925afd003f0e, type: 3}
+  facadeLayoutName: /Textures/Facades/Example2/ExampleLayout2.png
+  buildingHeight: 8
+--- !u!4 &1403251150
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1403251148}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
+  m_LocalPosition: {x: 0, y: 1.29, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!1 &1554240027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,8 +1961,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -279.5, y: 1.5}
-  m_SizeDelta: {x: -957, y: 299}
+  m_AnchoredPosition: {x: -320, y: 0}
+  m_SizeDelta: {x: -948.9, y: 299}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1577450312
 MonoBehaviour:
@@ -2203,6 +2315,7 @@ MonoBehaviour:
   nameField: {fileID: 466699272}
   zField: {fileID: 1307779965}
   facadePreviewHolder: {fileID: 642598295}
+  layoutPreviewHolder: {fileID: 208113956}
   colorBox: {fileID: 1025582005}
   promptBox: {fileID: 1577450310}
   nextButton: {fileID: 468926130}

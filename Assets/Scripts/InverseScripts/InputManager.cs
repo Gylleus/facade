@@ -12,8 +12,12 @@ public class InputManager : MonoBehaviour {
 
     public Text buildingNameText, widthText, heightText;
     public InputField nameField, zField;
+
+    
     public GameObject facadePreviewHolder;
     private Image facadePreview;
+    public GameObject layoutPreviewHolder;
+    private Image layoutPreview;
     public GameObject colorBox;
     public GameObject promptBox;
     public Button nextButton;
@@ -34,6 +38,8 @@ public class InputManager : MonoBehaviour {
         promptBox.SetActive(true);
         facadePreviewHolder.SetActive(true);
         facadePreview = facadePreviewHolder.GetComponent<Image>();
+        layoutPreviewHolder.SetActive(true);
+        layoutPreview = layoutPreviewHolder.GetComponent<Image>();
 
         if (fileDS == null) {
             fileDS = File.AppendText(Application.dataPath + "/" + ruleGen.outputFileName);
@@ -61,8 +67,8 @@ public class InputManager : MonoBehaviour {
         widthText.text = facade.getBuildingWidth().ToString();
         heightText.text = facade.getBuildingHeight().ToString();
         Vector3 previewScale = facadePreview.rectTransform.localScale;
-        print(previewScale.y * facade.getBuildingWidth() / facade.getBuildingHeight());
         facadePreview.rectTransform.localScale = new Vector3(previewScale.y * facade.getBuildingWidth() / facade.getBuildingHeight(), previewScale.y, 1);
+        layoutPreview.rectTransform.localScale = facadePreview.rectTransform.localScale;
         foreach (Color c in allCurrentFacadeRectangles.Keys) {
             Rectangle newRect = new Rectangle();
             newRect.symbol = c;
@@ -94,11 +100,10 @@ public class InputManager : MonoBehaviour {
             currentRectangle = null;
             // Initialize the new facade
             InputFacade iF = facades[nextFacadeIndex - 1].GetComponent<InputFacade>();
-            initializeNewFacade(iF);
-            string facadePath = Application.dataPath + iF.facadeLayoutName;
-
-            Texture2D imageTex = readFacadeImage(facadePath);
-            facadePreview.material.mainTexture = imageTex;
+            initializeNewFacade(iF); 
+            Texture2D layoutTex = readFacadeImage(Application.dataPath + iF.facadeLayoutName);
+            facadePreview.sprite = Sprite.Create(iF.inputFacade, new Rect(0, 0, iF.inputFacade.width, iF.inputFacade.height), facadePreview.sprite.pivot);
+            layoutPreview.sprite = Sprite.Create(layoutTex, new Rect(0, 0, layoutTex.width, layoutTex.height), facadePreview.sprite.pivot);
             // Go to the next facade index
             return true;
         }

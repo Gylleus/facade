@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 586308943}
   - component: {fileID: 586308948}
   m_Layer: 0
-  m_Name: ExampleHouse
+  m_Name: ExampleHouse2
   m_TagString: StartShape
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,8 +285,8 @@ Transform:
   m_PrefabInternal: {fileID: 1895218786}
   m_GameObject: {fileID: 586308942}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 33.24, y: 5.64, z: -0.98}
-  m_LocalScale: {x: 3, y: 11.279404, z: 3}
+  m_LocalPosition: {x: 33.24, y: 3.95, z: -0.98}
+  m_LocalScale: {x: 7.1, y: 8, z: 7.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -589,7 +589,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4169687851808138, guid: 1f861f3787655064c9546365347f5f23, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5.64
+      value: 3.95
       objectReference: {fileID: 0}
     - target: {fileID: 4169687851808138, guid: 1f861f3787655064c9546365347f5f23, type: 2}
       propertyPath: m_LocalPosition.z
@@ -617,15 +617,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4169687851808138, guid: 1f861f3787655064c9546365347f5f23, type: 2}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 7.1
       objectReference: {fileID: 0}
     - target: {fileID: 4169687851808138, guid: 1f861f3787655064c9546365347f5f23, type: 2}
       propertyPath: m_LocalScale.y
-      value: 11.279404
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4169687851808138, guid: 1f861f3787655064c9546365347f5f23, type: 2}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 7.1
       objectReference: {fileID: 0}
     - target: {fileID: 4169687851808138, guid: 1f861f3787655064c9546365347f5f23, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -651,7 +651,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1821539432994136, guid: 1f861f3787655064c9546365347f5f23, type: 2}
       propertyPath: m_Name
-      value: ExampleHouse
+      value: ExampleHouse2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f861f3787655064c9546365347f5f23, type: 2}
