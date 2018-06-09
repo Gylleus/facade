@@ -14,6 +14,7 @@ public static class MaterialExtractor {
             chosenTerminals.Add(chooseFromTerminals(terminals[c]));
         }
 
+        System.IO.Directory.CreateDirectory(Application.dataPath + "/Textures/GeneratedTextures");
         foreach (Rectangle terminalRect in chosenTerminals) {
             Texture2D terminalTexture = cutFromFacade(terminalRect, facade);
             byte[] bytes = terminalTexture.EncodeToPNG();

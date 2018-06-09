@@ -4,28 +4,22 @@ using UnityEngine;
 
 public class OcclusionHandler : MonoBehaviour {
 
-    private const float rayOriginOffset = 5.0f;
+    private const float rayOriginOffset = 0.5f;
 
 	public void handleOcclusion() {
-        GameObject[] allTerminals = GameObject.FindGameObjectsWithTag("TerminalShape");
+        GameObject[] allTerminals = GameObject.FindGameObjectsWithTag("TerminalShape"); 
         foreach (GameObject shape in allTerminals) {
-            if (shape.GetComponent<Shape>() != null && shape.GetComponent<Shape>().occludes != null) {
+            if (shape.GetComponent<Shape>() == null) {
                 continue;
             }
-            GameObject[] occluders = checkOcclusionFor(shape);
-            // If an object is occluding our current object
-            if (occluders != null) {
-                foreach (GameObject occluder in occluders) {
-                    invertOccludingNormals(occluder, shape);
-                }
-            }
+            fixOcclusionFor(shape);
         }
     }
 
     // Gets the object that an input object is occluded by. If there is not occluding object null will be returned.
-    public GameObject[] checkOcclusionFor(GameObject shape) {
+    public void fixOcclusionFor(GameObject shape) {
 
-        float factorFromCenter = 0.4f;
+        float factorFromCenter = 0.2f;
         Vector3[] rayCheckPoints = { shape.transform.position - shape.transform.right * factorFromCenter * shape.transform.localScale.x,
             shape.transform.position + shape.transform.right * factorFromCenter * shape.transform.localScale.x,
             shape.transform.position - shape.transform.up * factorFromCenter * shape.transform.localScale.y,
@@ -36,7 +30,6 @@ public class OcclusionHandler : MonoBehaviour {
             shape.transform.position + shape.transform.up * factorFromCenter/2 * shape.transform.localScale.y
         };
 
-        List<GameObject> occluders = new List<GameObject>();
         foreach (Vector3 checkPoint in rayCheckPoints) {
             Ray checkRay = new Ray(checkPoint + shape.transform.forward * (rayOriginOffset + shape.transform.localScale.z / 2), -shape.transform.forward);
             RaycastHit hit;
@@ -44,21 +37,11 @@ public class OcclusionHandler : MonoBehaviour {
             if (Physics.Raycast(checkRay, out hit)) {
                 Shape cur = shape.GetComponent<Shape>();
                 Shape other = hit.collider.gameObject.GetComponent<Shape>();
-
-                if (hit.collider.gameObject != shape && cur != null && other != null && cur.topParent == other.topParent) {
-                    hit.collider.gameObject.GetComponent<Shape>().occludes = shape;
-                    occluders.Add(hit.collider.gameObject);
-                    hit.collider.gameObject.SetActive(false);
+                if (hit.collider.gameObject != shape && cur != null && other != null && cur.topParent == other.topParent && cur.transform.forward != other.transform.forward) {
+                    invertOccludingNormals(hit.collider.gameObject, shape);
                 }
             }
         }
-        if (occluders.Count > 0) {
-            foreach (GameObject g in occluders) {
-                g.SetActive(true);
-            }
-            return occluders.ToArray();
-        }
-        return null;
     }
 
     // Changes all normals that are creating the occlusion such that they will be transparent to the occluding side

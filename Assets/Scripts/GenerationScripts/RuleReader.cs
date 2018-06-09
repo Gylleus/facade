@@ -7,7 +7,7 @@ using System;
 
 public class RuleReader : MonoBehaviour {
 
-    public string ruleFileName = "Assets/rules.txt";
+    public string ruleFileName = "rules.txt";
     private List<GameObject> shapes;
 
     private Grammar grammar;
@@ -36,8 +36,12 @@ public class RuleReader : MonoBehaviour {
     }
 
     private void readRules() {
+        string filePath = Application.dataPath + "/" + ruleFileName;
+        if (!File.Exists(filePath)) {
+            throw new Exception("Rules file " + ruleFileName + " was not found. Has rules not been generated or otherwise defined?");
+        }
         string line;
-        StreamReader reader = new StreamReader(Application.dataPath + "/" + ruleFileName, Encoding.Default);
+        StreamReader reader = new StreamReader(filePath, Encoding.Default);
         using (reader) {
             do {
                 lineNr++;

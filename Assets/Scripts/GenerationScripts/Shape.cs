@@ -9,8 +9,6 @@ public class Shape : MonoBehaviour {
 
     // To prevent infinite loops of protrusion
     public bool hasProtruded = false;
-    public bool debugging = false;
-    public GameObject occludes;
 
     // Used for remembering how much to squeeze hexagons
     private Vector3 finalSize;

@@ -355,7 +355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 315, y: -246}
+  m_AnchoredPosition: {x: 304, y: -157}
   m_SizeDelta: {x: 299.94995, y: 298.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &208113958
@@ -878,7 +878,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.22636408, y: 0.05334363}
   m_AnchorMax: {x: 0.45763594, y: 0.148}
-  m_AnchoredPosition: {x: 1.5999985, y: -1.5999985}
+  m_AnchoredPosition: {x: 1.6000061, y: -1.5999985}
   m_SizeDelta: {x: 5.199997, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &468926130
@@ -1072,7 +1072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 304, y: 236}
+  m_AnchoredPosition: {x: 304, y: 159}
   m_SizeDelta: {x: 299.94995, y: 298.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &642598297
@@ -1349,7 +1349,7 @@ GameObject:
   - component: {fileID: 1078937460}
   - component: {fileID: 1078937459}
   m_Layer: 0
-  m_Name: ExampleHouse
+  m_Name: BrickHouse
   m_TagString: Facade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputFacade: {fileID: 2800000, guid: 7c45f2b1dc947cb44a79ef0e2c80eac7, type: 3}
-  facadeLayoutName: /Textures/Facades/Example/ExampleLayout.png
+  facadeLayoutName: /Textures/Facades/BrickHouse/BrickLayout.png
   buildingHeight: 8
 --- !u!4 &1078937460
 Transform:
@@ -1414,7 +1414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10300001, y: 0.87333375}
   m_AnchorMax: {x: 0.4766364, y: 0.97}
-  m_AnchoredPosition: {x: -0.64998627, y: 0.5}
+  m_AnchoredPosition: {x: -0.64997864, y: 0.5}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163722873
@@ -1761,7 +1761,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.096, y: 0.48662546}
   m_AnchorMax: {x: 0.46718013, y: 0.58000004}
-  m_AnchoredPosition: {x: -0.6500168, y: -0.6000004}
+  m_AnchoredPosition: {x: -0.6500244, y: -0.6000004}
   m_SizeDelta: {x: 3, y: -1.2000008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1340953854
@@ -1813,7 +1813,7 @@ GameObject:
   - component: {fileID: 1403251150}
   - component: {fileID: 1403251149}
   m_Layer: 0
-  m_Name: ExampleHouse2
+  m_Name: YellowHouse
   m_TagString: Facade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1831,7 +1831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputFacade: {fileID: 2800000, guid: 458eb269e54686e419a0925afd003f0e, type: 3}
-  facadeLayoutName: /Textures/Facades/Example2/ExampleLayout2.png
+  facadeLayoutName: /Textures/Facades/YellowHouse/YellowLayout2.png
   buildingHeight: 8
 --- !u!4 &1403251150
 Transform:
@@ -1959,10 +1959,10 @@ RectTransform:
   m_Father: {fileID: 263525966}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -320, y: 0}
-  m_SizeDelta: {x: -948.9, y: 299}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -229.55, y: 0}
+  m_SizeDelta: {x: 459.09998, y: 299}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1577450312
 MonoBehaviour:

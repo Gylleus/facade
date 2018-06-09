@@ -27,7 +27,7 @@ public class GrammarDerivator : MonoBehaviour {
 
         ruleSelector = grammarObject.GetComponent<RuleSelector>();
         grammar = grammarObject.GetComponent<Grammar>();
-        startingShapes = new GameObject[] { gameObject };
+        startingShapes = getStartingShapes();
 
         foreach (GameObject s in startingShapes) {
             shapes.Add(s);
