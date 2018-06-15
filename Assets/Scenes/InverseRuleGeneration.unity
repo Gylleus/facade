@@ -1831,7 +1831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputFacade: {fileID: 2800000, guid: 458eb269e54686e419a0925afd003f0e, type: 3}
-  facadeLayoutName: /Textures/Facades/YellowHouse/YellowLayout2.png
+  facadeLayoutName: /Textures/Facades/YellowHouse/YellowLayout.png
   buildingHeight: 8
 --- !u!4 &1403251150
 Transform:

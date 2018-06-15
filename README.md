@@ -1,4 +1,4 @@
-# Facade
+# Splitter
 
 ## Introduction
 
