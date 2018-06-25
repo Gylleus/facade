@@ -37,6 +37,8 @@ When this is done the rule generation process will begin and if all goes well th
 After generating the rules you can move to the __Preview__ scene. Here you can see how the objects of the example houses are formed and create your own house (or simply rename the example houses to your chosen building name). Pressing
 play will start the generation process and you should see your building.
 
+To reset the generated rules, just remove or edit the __rules.txt__ file and remove __GeneratedTextures__ in the __Textures__ folder.
+
 ## Limitations
 
 The main limitation of this project is the sensitivity of the rule generator. If it can not at any time split the layout image vertically or horizontally such that it does not cut through any colored rectangle it will fail. Please keep this in mind when designing layout images. Ideally the generator could be improved to intelligently work around these situations in the future.
