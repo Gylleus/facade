@@ -14,7 +14,7 @@ As a disclaimer the theory and ideas behind the main algorithms are not my own. 
 
 ## Quickstart
 
-The project can either be opened as a project or imported via the included unity package. If the former does not work, just create a new project and import the package.
+It is recommended to create a fresh project and import __splitter.unitpackage__ by going to _Assets_ -> _Import Package_ -> _Custom Package_. 
 
 To understand the flow of the generator two example facades are given. Navigate to the __InverseRuleGeneration__ scene and run the scene. Optionally provide names and Z-values for each element on the facade or just skip it by pressing Next repeatedly. When all the elements of both facades have been processed the rule generation will begin and be written to the rules.txt file.
 
