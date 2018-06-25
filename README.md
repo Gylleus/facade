@@ -16,9 +16,9 @@ As a disclaimer the theory and ideas behind the main algorithms are not my own. 
 
 It is recommended to create a fresh project and import __splitter.unitpackage__ by going to _Assets_ -> _Import Package_ -> _Custom Package_. 
 
-To understand the flow of the generator two example facades are given. Navigate to the __InverseRuleGeneration__ scene and run the scene. Optionally provide names and Z-values for each element on the facade or just skip it by pressing Next repeatedly. When all the elements of both facades have been processed the rule generation will begin and be written to the rules.txt file.
+To understand the flow of the generator two example facades are given. Navigate to the __InverseRuleGeneration__ scene and run the scene. Optionally provide names and Z-values for each element on the facade or just skip it by pressing Next repeatedly. When all the elements a facade have been processed the rule generation will begin and be written to the rules.txt file.
 
-When this is done, navigate to the __Preview__ scene. If you run the scene the generator will read the produces rules and start the generation process for both buildings. When it is done you will see the two produced buildings.
+When this is done for both facades, navigate to the __Preview__ scene. If you run the scene the generator will read the produced rules and start the generation process for both buildings. When it is done you will see the two produced buildings.
 
 ## How to use
 
@@ -34,8 +34,7 @@ colored regions in the layout. Note that the Z-value should be kept relatively s
 
 When this is done the rule generation process will begin and if all goes well the resulting rules will be written to _rules.txt_ in the Assets folder. 
 
-After generating the rules you can move to the __Preview__ scene. Here you can see how the objects of the example houses are formed and create your own house (or simply rename the example houses to your chosen building name). Pressing
-play will start the generation process and you should see your building.
+After generating the rules you can move to the __Preview__ scene. Here you can see how the objects of the example houses are formed and create your own house (or simply rename the example houses to your chosen building name). Pressing play will start the generation process and you should see your building.
 
 To reset the generated rules, just remove or edit the __rules.txt__ file and remove __GeneratedTextures__ in the __Textures__ folder.
 
@@ -43,9 +42,8 @@ To reset the generated rules, just remove or edit the __rules.txt__ file and rem
 
 The main limitation of this project is the sensitivity of the rule generator. If it can not at any time split the layout image vertically or horizontally such that it does not cut through any colored rectangle it will fail. Please keep this in mind when designing layout images. Ideally the generator could be improved to intelligently work around these situations in the future.
 
-The generated buildings can also be quite resource intensive depending on how many elements the facade consists of. 
+The generated buildings can also be resource intensive depending on how many elements the facade consists of. The more detailed a provided layout image is the more elements will be produced.
 
 ## Comments
 
-As this project was done as a part of a master's thesis the focus has more been on the algorithms themselves and results
-rather than user friendliness. This is why the user experience might seem a bit unintuitive and unstable since it was not mainly intended for other users. But still, please feel free to download, experiment and provide feedback.
+As this project was done as a part of a master's thesis the focus has more been on the algorithms themselves and results rather than user friendliness. This is why the user experience might seem a bit unintuitive and unstable since it was not mainly intended for other users. But still, please feel free to download, experiment and provide feedback.
